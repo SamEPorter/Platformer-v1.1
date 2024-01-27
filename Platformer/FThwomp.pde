@@ -79,7 +79,7 @@ class FThwomp extends FGameObject {
      thwMode = fall;
    }
    
-   if (isTouching("wall")) thwMode = rise;
+   if (isTouching("wall") ||  isTouching("lava")) thwMode = rise;
    if (isTouching("thwTop")) {
     thwMode = sleepy;
     setPosition(x, y+1);

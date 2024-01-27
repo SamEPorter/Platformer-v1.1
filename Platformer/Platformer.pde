@@ -39,7 +39,7 @@ int wallGrass = #c4ff0e;
 
 
 // Tiles
-PImage map, TutWorld, LevelSelect, map2, map2_2;
+PImage map, TutWorld, LevelSelect, map2, map2_2, map3_1, map3_2;
 PImage ice, brick, lava, dirtC, dirtN, dirtE, dirtS, dirtW, dirtNE, dirtNW, dirtSE, dirtSW;
 PImage treeT, treeC, treeMid, treeL, treeR, bridgeL, bridgeC, bridgeR, water;
 
@@ -75,6 +75,16 @@ int HBT = 0;
 int HJ = 0;
 float diam = 0;
 
+int vy = -2;
+int y1 = 300;
+int y2 = 375;
+int y3 = 450;
+int y4 = 525;
+int y5 = 600;
+
+
+
+
 //keys
 boolean wkey, akey, skey, dkey, upkey, downkey, leftkey, rightkey;
 
@@ -105,6 +115,9 @@ void setup() {
   LevelSelect = loadImage("LevelSelect.png");
   map2 = loadImage("map2.png");
   map2_2 = loadImage("map2_2.png");
+  map3_1 = loadImage("map3_1.png");
+  map3_2 = loadImage("map3_2.png");
+
 
   // BLOCKS =======================================
 
@@ -187,7 +200,7 @@ void setup() {
   platform.resize(32, 8);
 
   flagpole = loadImage("flagpole.png");
-  
+
   tube = loadImage("tube.png");
 
 
@@ -232,20 +245,29 @@ void setup() {
 
 void loadWorld(PImage img) {
   if (img == map) {
-    //world = new FWorld(-10, -10 ,2000, 2000);
+    WA = false;
     MapNum = 2;
   } else if (img == TutWorld) {
-    //world = new FWorld(-10, -10, 6720, 1300);
+    WA = false;
     MapNum = 3;
   } else if (img == LevelSelect) {
-    //world = new FWorld(0, 0, 1024, 1024);
+
     MapNum = 1;
     WA = false;
   } else if (img == map2) {
+
     MapNum = 4;
   } else if (img == map2_2) {
-    //world = new FWorld(0, 0, 1024, 1024);
+
     MapNum = 5;
+    WA = false;
+  } else if (img == map3_1) {
+
+    MapNum = 6;
+    WA = false;
+  } else if (img == map3_2) {
+
+    MapNum = 7;
     WA = false;
   }
   world = new FWorld(-10, -10, 6720, 1300);
@@ -332,7 +354,7 @@ void loadWorld(PImage img) {
         world.add(b);
         b.setName("dirt");
       }
-      
+
       if (c == wallGrass) {
         if (s == dirtClr && e == dirtClr && n != dirtClr && w != dirtClr) {
           b.attachImage(dirtNW);
@@ -347,7 +369,7 @@ void loadWorld(PImage img) {
         world.add(b);
         b.setName("wallGrass");
       }
-      
+
       if (c == green) {
         if (e == green && w == green && s != treecolor) {
           b.attachImage(treeMid);
@@ -427,7 +449,7 @@ void loadWorld(PImage img) {
         terrain.add(fp);
         world.add(fp);
       }
-      
+
       if (c == tubeClr) {
         FTube tb = new FTube(x*gridSize, y*gridSize);
         terrain.add(tb);
@@ -454,49 +476,87 @@ void draw() {
   drawWorld();
   actWorld();
 
-// Level Select spot ==========================================
-if (MapNum == 1) {
-fill(255);
-rect(-1, -1, width+2, height+2);
-if (WinC == 0) {
-fill(255, 0, 0);
-} else {
- fill(0, 0, 255); 
-}
-ellipse(width/5, height/2, 160, 80);
-if (WinC <= 1) {
-fill(255, 0, 0);
-} else {
- fill(0, 0, 255); 
-}
-ellipse(width/2, height*2/3, 160, 80);
-if (WinC <= 2) {
-fill(255, 0, 0);
-} else {
- fill(0, 0, 255); 
-}
-ellipse(width*4/5, height/2, 160, 80);
+  // Level Select spot ==========================================
+  if (MapNum == 1) {
+    textSize(32);
+    if (mode == game) {
+      fill(255);
+      rect(-1, -1, width+2, height+2);
+      if (WinC == 0) {
+        fill(255, 0, 0);
+      } else {
+        fill(0, 0, 255);
+      }
+      ellipse(width/5, height/2, 160, 80);
+      if (WinC <= 1) {
+        fill(255, 0, 0);
+      } else {
+        fill(0, 0, 255);
+      }
+      ellipse(width/2, height*2/3, 160, 80);
+      if (WinC <= 2) {
+        fill(255, 0, 0);
+      } else {
+        fill(0, 0, 255);
+      }
+      ellipse(width*4/5, height/2, 160, 80);
 
-fill(0);
-text("Level #1", width/5-58, height/2+70);
-text("Level #2", width/2-58, height*2/3+70);
-text("Level #3", width*4/5-58, height/2+70);
+      fill(0);
+      text("Level #1", width/5-58, height/2+70);
+      text("Level #2", width/2-58, height*2/3+70);
+      text("Level #3", width*4/5-58, height/2+70);
 
-if (mouseX > width/5-70 && mouseX < width/5+70 && mouseY > height/2-35 && mouseY < height/2+35) {
-  image(idle[0], width/5-40, height/2-70, 80, 80);
-
-} else if (mouseX > width/2-70 && mouseX < width/2+70 && mouseY > height*2/3-35 && mouseY < height*2/3+35) {  
-  image(idle[0], width/2-40, height*2/3-70, 80, 80);
+      if (mouseX > width/5-70 && mouseX < width/5+70 && mouseY > height/2-35 && mouseY < height/2+35) {
+        image(idle[0], width/5-40, height/2-70, 80, 80);
+      } else if (mouseX > width/2-70 && mouseX < width/2+70 && mouseY > height*2/3-35 && mouseY < height*2/3+35) {
+        image(idle[0], width/2-40, height*2/3-70, 80, 80);
+      } else if (mouseX > width*4/5-70 && mouseX < width*4/5+70 && mouseY > height/2-35 && mouseY < height/2+35) {
+        image(idle[0], width*4/5-40, height/2-70, 80, 80);
+      }
+    } else {
+    
+   y1 = y1 + vy;
+   y2 = y2 + vy;
+   y3 = y3 + vy;
+   y4 = y4 + vy;
+   y5 = y5 + vy;
+   
+   if (y1 < 290) y1 = 675;
+   if (y2 < 290) y2 = 675;
+   if (y3 < 290) y3 = 675;
+   if (y4 < 290) y4 = 675;
+   if (y5 < 290) y5 = 675;
+   
+    fill(255);
+    rect(-1, -1, width+2, height+2);
   
-} else if (mouseX > width*4/5-70 && mouseX < width*4/5+70 && mouseY > height/2-35 && mouseY < height/2+35) { 
-  image(idle[0], width*4/5-40, height/2-70, 80, 80);
-}
-}
 
+    fill(0);
+    text(" Click Anywhere\nFor Level  Select", 70, height*2/3);
+    
+    fill(255, 0, 0);
+    text("Game Design:  Sam Porter", width/2+35, y1);
+    fill(255,200, 0);
+    text("Extra Features:  Sam Porter", width/2+25, y2);
+    fill(0, 255, 0);
+    text("Map Design: Sam Porter", width/2+45, y3);
+    fill(0, 255, 255);
+    text("Animation Design:  Sam Porter", width/2-8, y4);
+    fill(0, 0, 255);
+    text("Debugging:  Sam Porter", width/2+45, y5);
+    
+    fill(255);
+    rect(-1, -1, width+2, 300);
+    textSize(90);
+    fill(0);
+    text("You Beat The Game!", 25, height/6);
+    
+   }
+  }
   // Zoom In Animation ===========================================
   //println(diam);
-  println(player.getX());
-  println(player.getY());
+  println(mode);
+  //println(player.getY());
   fill(0);
   rect(0, 0, width, diam);
   rect(0, 0, diam*4/3, height);
@@ -507,11 +567,17 @@ if (mouseX > width/5-70 && mouseX < width/5+70 && mouseY > height/2-35 && mouseY
   } else if (WAtmr <= 65 && WAtmr > 0) {
     diam = diam -5;
   } else if (WAtmr == 0) diam = 0;
-  
+
   // ===========================================================
-  
-   WAtmr --;
-    WAtmr = max(WAtmr, 0);
+  if (WinC == 3) {
+    mode = GAMEOVER;
+  }
+
+
+
+
+  WAtmr --;
+  WAtmr = max(WAtmr, 0);
 }
 
 void drawWorld() {

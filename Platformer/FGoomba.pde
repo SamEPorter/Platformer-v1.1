@@ -27,15 +27,12 @@ class FGoomba extends FGameObject {
   }
 
   void collide() {
-    if (isTouching("wall")) {
+    if (isTouching("wall") || isTouching("wallGrass") || isTouching("tube")) {
       direction *= -1;
       setPosition(getX()+direction, getY());
     }
     
-    if (isTouching("wallGrass")) {
-      direction *= -1;
-      setPosition(getX()+direction, getY());
-    }
+    
 
 
     if (isTouching("player")) {

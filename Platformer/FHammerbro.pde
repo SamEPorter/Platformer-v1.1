@@ -99,13 +99,13 @@ class FHammerbro extends FGameObject {
     FBox Hammer;
     if (throwTmr == 0) {
       Hammer = new FBox(16, 16);
-      Hammer.setPosition(getX(), getY()+6);
+      Hammer.setPosition(getX(), getY()+10);
       if (player.getX() > getX()) {
 
-        Hammer.setVelocity(150, -200);
+        Hammer.setVelocity(150, -175);
       } else {
 
-        Hammer.setVelocity(-150, -200);
+        Hammer.setVelocity(-150, -175);
       }
       Hammer.attachImage(hammer);
       Hammer.setStatic(false);

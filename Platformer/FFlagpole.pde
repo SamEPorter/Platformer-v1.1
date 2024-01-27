@@ -36,10 +36,17 @@ class FFlagpole extends FGameObject {
       if (WAtmr == 65) {
       enemies.clear();
       terrain.clear();
+      if (MapNum == 3 && WinC == 0) {
+      WinC++;
+      } else if (MapNum == 5 && WinC == 1) {
+        WinC++;
+      } else if (MapNum == 7 && WinC == 2)  {
+        WinC++; 
+      }
       loadWorld(LevelSelect);
       loadPlayer();
       player.setPosition(10, 500);
-      WinC++;
+      
       }
       //WA = false;
     }

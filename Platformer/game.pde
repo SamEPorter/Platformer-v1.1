@@ -5,7 +5,7 @@ void game() {
       terrain.clear();
       loadWorld(map2);
       loadPlayer();
-      player.setPosition(2300, 512);
+      player.setPosition(128, 540);
     }
   }
 }
@@ -28,7 +28,7 @@ void gameClicks() {
         loadWorld(map2);
         loadPlayer();
         // player.setPosition(160, 512);
-        player.setPosition(2300, 512);
+        player.setPosition(128, 540);
       }
     }
 
@@ -36,11 +36,12 @@ void gameClicks() {
       if (WinC >= 2) {
         enemies.clear();
         terrain.clear();
-        loadWorld(LevelSelect);
+        loadWorld(map3_1);
         loadPlayer();
-        player.setPosition(10, 500);
+        player.setPosition(128, 460);
       }
     }
+    if (mouseY < width/3) WinC = 3;
   }
 }
 
