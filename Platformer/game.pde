@@ -2,10 +2,10 @@ void game() {
   if (MapNum == 1) {
     if (skey) {
       enemies.clear();
-      terrain.clear();
-      loadWorld(map2);
-      loadPlayer();
-      player.setPosition(128, 540);
+          terrain.clear();
+          loadWorld(map3_2);
+          loadPlayer();
+          player.setPosition(2000, 100);
     }
   }
 }
