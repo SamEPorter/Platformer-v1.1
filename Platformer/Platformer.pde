@@ -35,10 +35,11 @@ int hammerbroClr = #b83dba;
 int platformClr = #fdeca6;
 int flagpoleClr = #ff7f27;
 int tubeClr = #13a500;
+int wallGrass = #c4ff0e;
 
 
 // Tiles
-PImage map, TutWorld, LevelSelect, map2;
+PImage map, TutWorld, LevelSelect, map2, map2_2;
 PImage ice, brick, lava, dirtC, dirtN, dirtE, dirtS, dirtW, dirtNE, dirtNW, dirtSE, dirtSW;
 PImage treeT, treeC, treeMid, treeL, treeR, bridgeL, bridgeC, bridgeR, water;
 
@@ -65,6 +66,7 @@ boolean rsJump = false;
 boolean lsJump = false;
 
 boolean WA = false;
+boolean LavaC = false;
 
 int WAtmr = 0;
 
@@ -102,6 +104,7 @@ void setup() {
   TutWorld = loadImage("TutWorld.png");
   LevelSelect = loadImage("LevelSelect.png");
   map2 = loadImage("map2.png");
+  map2_2 = loadImage("map2_2.png");
 
   // BLOCKS =======================================
 
@@ -240,6 +243,10 @@ void loadWorld(PImage img) {
     WA = false;
   } else if (img == map2) {
     MapNum = 4;
+  } else if (img == map2_2) {
+    //world = new FWorld(0, 0, 1024, 1024);
+    MapNum = 5;
+    WA = false;
   }
   world = new FWorld(-10, -10, 6720, 1300);
   world.setGravity(0, 900);
@@ -298,9 +305,9 @@ void loadWorld(PImage img) {
         world.add(lv);
       }
       if (c == dirtClr) {
-        if (s == dirtClr && e == dirtClr && n == dirtClr && w == dirtClr) {
+        if (s == dirtClr && e == dirtClr && w == dirtClr && n == dirtClr || s == dirtClr && e == dirtClr && w == dirtClr && n == wallGrass) {
           b.attachImage(dirtC);
-        } else if (s == dirtClr && e == dirtClr && n != dirtClr && w == dirtClr) {
+        } else if (s == dirtClr && e == dirtClr && n != dirtClr && n != wallGrass && w == dirtClr) {
           b.attachImage(dirtN);
         } else if (s == dirtClr && e != dirtClr && n == dirtClr && w == dirtClr) {
           b.attachImage(dirtE);
@@ -308,9 +315,9 @@ void loadWorld(PImage img) {
           b.attachImage(dirtS);
         } else if (s == dirtClr && e == dirtClr && n == dirtClr && w != dirtClr) {
           b.attachImage(dirtW);
-        } else if (s == dirtClr && e == dirtClr && n != dirtClr && w != dirtClr) {
+        } else if (s == dirtClr && e == dirtClr && n != dirtClr && w != dirtClr && w != wallGrass) {
           b.attachImage(dirtNW);
-        } else if (s == dirtClr && e != dirtClr && n != dirtClr && w == dirtClr) {
+        } else if (s == dirtClr && e != dirtClr && e != wallGrass && n != dirtClr && w == dirtClr) {
           b.attachImage(dirtNE);
         } else if (s != dirtClr && e == dirtClr && n == dirtClr && w != dirtClr) {
           b.attachImage(dirtSW);
@@ -325,6 +332,22 @@ void loadWorld(PImage img) {
         world.add(b);
         b.setName("dirt");
       }
+      
+      if (c == wallGrass) {
+        if (s == dirtClr && e == dirtClr && n != dirtClr && w != dirtClr) {
+          b.attachImage(dirtNW);
+        } else if (s == dirtClr && e != dirtClr && n != dirtClr && w == dirtClr) {
+          b.attachImage(dirtNE);
+        } else {
+          b.attachImage(dirtN);
+        }
+        b.setStatic(true);
+        b.setFriction(4);
+        b.setGrabbable(false);
+        world.add(b);
+        b.setName("wallGrass");
+      }
+      
       if (c == green) {
         if (e == green && w == green && s != treecolor) {
           b.attachImage(treeMid);
@@ -461,16 +484,19 @@ text("Level #3", width*4/5-58, height/2+70);
 
 if (mouseX > width/5-70 && mouseX < width/5+70 && mouseY > height/2-35 && mouseY < height/2+35) {
   image(idle[0], width/5-40, height/2-70, 80, 80);
-} else if (mouseX > width/2-70 && mouseX < width/2+70 && mouseY > height*2/3-35 && mouseY < height*2/3+35) {
+
+} else if (mouseX > width/2-70 && mouseX < width/2+70 && mouseY > height*2/3-35 && mouseY < height*2/3+35) {  
   image(idle[0], width/2-40, height*2/3-70, 80, 80);
-} else if (mouseX > width*4/5-70 && mouseX < width*4/5+70 && mouseY > height/2-35 && mouseY < height/2+35) {
+  
+} else if (mouseX > width*4/5-70 && mouseX < width*4/5+70 && mouseY > height/2-35 && mouseY < height/2+35) { 
   image(idle[0], width*4/5-40, height/2-70, 80, 80);
 }
 }
 
   // Zoom In Animation ===========================================
-  println(diam);
-  println(WAtmr);
+  //println(diam);
+  println(player.getX());
+  println(player.getY());
   fill(0);
   rect(0, 0, width, diam);
   rect(0, 0, diam*4/3, height);

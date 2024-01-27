@@ -39,6 +39,7 @@ class FFlagpole extends FGameObject {
       loadWorld(LevelSelect);
       loadPlayer();
       player.setPosition(10, 500);
+      WinC++;
       }
       //WA = false;
     }

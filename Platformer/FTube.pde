@@ -13,19 +13,48 @@ class FTube extends FGameObject {
     //println(player.getX());
     if (isTouching("player") && player.getY() < getY()-16 && player.getX() < getX()+12 && player.getX() > getX()-12) {
       if (skey) {
-        WAtmr = 130;
-      }
-      if (player.getX() < 1675 && player.getX() > 1643) {
-        if (WAtmr == 65) player.setPosition(1984, 527);
-      }
-    }
 
-    if (isTouching("player") && player.getY() < getY()-16 && player.getX() < getX()+12 && player.getX() > getX()-12) {
-      if (skey) {
-        WAtmr = 130;
+
+        if (player.getX() < 1675 && player.getX() > 1643) {
+          WAtmr = 130;
+          //if (WAtmr == 65) player.setPosition(1984, 527);
+        }
+
+
+        if (player.getX() < 2000 && player.getX() > 1968) {
+          WAtmr = 130;
+          //if (WAtmr == 65) player.setPosition(1664, 495);
+        }
+
+
+
+        if (player.getX() < 2640 && player.getX() > 2608) {
+          WAtmr = 130;
+          //if (WAtmr == 65) {
+          //  enemies.clear();
+          //  terrain.clear();
+          //  loadWorld(map2_2);
+          //  loadPlayer();
+          //  player.setPosition(126, 374);
+          //}
+        }
       }
-      if (player.getX() < 2000 && player.getX() > 1968) {
-        if (WAtmr == 65) player.setPosition(1664, 495);
+      if (WAtmr == 65) {
+        if (player.getX() < 1675 && player.getX() > 1643) {
+          player.setPosition(1984, 527);
+        }
+        if (player.getX() < 2000 && player.getX() > 1968) {
+          player.setPosition(1664, 495);
+        }
+
+        if (player.getX() < 2640 && player.getX() > 2608) {
+
+          enemies.clear();
+          terrain.clear();
+          loadWorld(map2_2);
+          loadPlayer();
+          player.setPosition(126, 374);
+        }
       }
     }
   }
